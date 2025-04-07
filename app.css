@@ -1,0 +1,70 @@
+student-info-component {
+	border: 10px solid #ccc;
+	display: flex;
+	flex-direction: column;
+	width: fit-content;
+	padding: 10px;
+	border-radius: 10px;
+	gap: 10px;
+}
+
+menu-component {
+	display: flex;
+	flex-direction: column;
+	gap: 10px;
+
+	button {
+		padding: 10px;
+		border: none;
+		border-radius: 5px;
+		background-color: skyblue;
+		cursor: pointer;
+		transition: 0.5s;
+	}
+	button:hover {
+		background-color: green;
+		transition: 0.5s;
+	}
+	/* on click */
+	button:active {
+		background-color: red;
+		transition: 0s;
+	}
+
+	remove-student-component, search-student-component {
+		display: flex;
+		flex-direction: row;
+		justify-content: space-between;
+		gap: 10px;
+
+		* {
+			width: 100%;
+		}
+	}
+
+}
+
+.col {
+	display: flex;
+	flex-direction: column;
+}
+
+
+body {
+	display: flex;
+	flex-direction: column;
+	gap: 30px;
+}
+
+.show-students {
+	display: flex;
+	flex-direction: row;
+	gap: 10px;
+	flex-wrap: wrap;
+}
+
+.show-major-student {
+	display: flex;
+	flex-direction: column;
+	gap: 10px;
+}

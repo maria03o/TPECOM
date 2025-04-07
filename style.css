@@ -1,0 +1,146 @@
+
+body {
+    margin: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: #f0f2f5;
+    color: #333;
+}
+
+h1 {
+    text-align: center;
+    padding: 20px 0;
+    color: #2c3e50;
+}
+
+/* Filters */
+#filters {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    background: #fff;
+    border-bottom: 1px solid #ccc;
+}
+
+#filters input[type="text"],
+#filters select {
+    padding: 8px 12px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    min-width: 200px;
+}
+
+#filters button {
+    background-color: #3498db;
+    color: white;
+    border: none;
+    padding: 8px 15px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+#filters button:hover {
+    background-color: #2980b9;
+}
+
+/* Student Cards */
+#student-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center;
+    padding: 30px;
+}
+
+.student {
+    background-color: #fff;
+    padding: 20px;
+    width: 230px;
+    border-radius: 12px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    position: relative;
+    transition: transform 0.2s;
+}
+
+.student:hover {
+    transform: scale(1.02);
+}
+
+.student p {
+    margin: 10px 0;
+    font-size: 1em;
+}
+
+/* Badge Remark */
+.student .remark-badge {
+    display: inline-block;
+    padding: 5px 10px;
+    border-radius: 20px;
+    font-size: 0.8em;
+    font-weight: bold;
+    color: white;
+}
+
+.remark-0 { background-color: #e74c3c; }       /* Red: Passable */
+.remark-1 { background-color: #e67e22; }       /* Orange: Needs Improvement */
+.remark-2 { background-color: #f1c40f; color: #333; } /* Yellow: Good */
+.remark-3 { background-color: #2ecc71; }       /* Green: Excellent */
+
+/* Delete button */
+.student button {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: transparent;
+    border: none;
+    font-size: 1.2em;
+    cursor: pointer;
+}
+
+/* Add student section */
+#add-student-container {
+    background: #fff;
+    max-width: 500px;
+    margin: 30px auto;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+#add-student-container h2 {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+#add-student-form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+#add-student-form input,
+#add-student-form button {
+    padding: 10px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+}
+
+#add-student-form button {
+    background-color: #27ae60;
+    color: white;
+    font-weight: bold;
+    border: none;
+    transition: background-color 0.3s;
+}
+
+#add-student-form button:hover {
+    background-color: #219150;
+}
+
+
+
+  
+  
