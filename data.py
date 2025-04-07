@@ -14,10 +14,11 @@ class Remark_Manager:
         return ["Passable", "Needs Improvement", "Good", "Excellent"]
 
 class Type_Manager:
-    FIRST_NAME = 0
-    LAST_NAME = 1
-    GRADE = 2
-    REMARK = 3
+    ALL = 0
+    FIRST_NAME = 1
+    LAST_NAME = 2
+    GRADE = 3
+    REMARK = 4
 
 
 """lajout dans student 2fnct 
@@ -87,7 +88,7 @@ class Section:
     def get_good_students(self):
         return [s for s in self.students if s.remark >= Remark_Manager.GOOD]
 
-    def remove_all_students_by(self, type, value):
+    def remove_students_by(self, type, value):
         if type == Type_Manager.FIRST_NAME:
             self.students = [s for s in self.students if s.first_name != value]
         elif type == Type_Manager.LAST_NAME:
@@ -99,16 +100,31 @@ class Section:
             value = int(value)
             self.students = [s for s in self.students if s.remark != value]
         self.save_students()
+
+    def search_students(self, type, value):
+        if type == Type_Manager.ALL:
+            return self.students
+        elif type == Type_Manager.FIRST_NAME:
+            return [s for s in self.students if s.first_name == value]
+        elif type == Type_Manager.LAST_NAME:
+            return [s for s in self.students if s.last_name == value]
+        elif type == Type_Manager.GRADE:
+            value = int(value)
+            return [s for s in self.students if s.grade == value]
+        elif type == Type_Manager.REMARK:
+            value = int(value)
+            return [s for s in self.students if s.remark == value]
+
         
     def add_student(self, student):
-     self.students.append(student)
-     self.save_students()
-    
-def get_major_student(self):
+        self.students.append(student)
+        self.save_students()
+        
+    def get_major_student(self):
         major_student = self.students[0]
         for student in self.students:
             if student.grade > major_student.grade:
-               major_student = student
+                major_student = student
         return major_student
 
 

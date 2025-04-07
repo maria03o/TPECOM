@@ -53,11 +53,16 @@ const REMOVE = 1;
 function _compontent(functinality) {
 	
 	let component = null;
-	if (functinality == REMOVE)
+	let submit_button = button();
+
+	if (functinality == REMOVE) {
 		component = div('remove-student-component');
-	else if (functinality == SEARCH)
+		submit_button.text('Supprimer etudiant');
+	} else if (functinality == SEARCH) {
 		component = div('search-student-component');
-	
+		submit_button.text('Afficher etudiant');
+	} 
+
 	let type = select();
 	for (let type_choice of constants.types)
 		type.append_child(option().text(type_choice[1]).value(type_choice[0]));
@@ -69,23 +74,27 @@ function _compontent(functinality) {
 	for (let i = 0; i < storage.get_local_storage(constants.remarks).length; i++) 
 		values.append_child(option().text(get_remark_func(i)).value(i));
 
-	let submit_button = button().text('Supprimer etudiant passable').event('click', () => {
+	submit_button.event('click', () => {
 		let type_value = parseInt(type.get_value());
-		values = component.get_child(1);
 		let value = null;
-		if (!type_value == constants.all)
+		if (type_value != constants.all) {
+			values = component.get_child(1);
 			value = type_value == constants.remark ? parseInt(values.get_value()) : values.get_value();
-		remove_students(type_value, value);
+		}
+		if (functinality == SEARCH) 
+			search_students(type_value, value);
+		else if (functinality == REMOVE)
+			remove_students(type_value, value);
 	});
 
 	type.event('change', () => {
-		let value = type.get_value();
+		let value = parseInt(type.get_value());
 		component.clear();
 		component.append_child(type);
 		if (value == constants.first_name || value == constants.last_name || value == constants.grade)
-			component.insert_child(1, input());
+			component.append_child(input());
 		else if (value == constants.remark) 
-			component.insert_child(1, values);
+			component.append_child(values);
 		component.append_child(submit_button);
 	});
 
@@ -103,10 +112,6 @@ export function remove_student_component() {
 // modify this component be the same as remove_student_component
 export function show_well_student_component() {
 	return _compontent(SEARCH);
-
-	return button().text('Afficher etudiants bien').event('click', () => {
-		show_good_students();
-	});
 }
 
 export function menu_component() {
@@ -153,6 +158,14 @@ function show_good_students_request() {
 	return request('/get_good_students');
 }
 
+function remove_students_request(type, value) {
+	return request('/remove_students', {type, value});
+}
+
+function search_students_request(type, value) {
+	return request('/search_students', {type, value});
+}
+
 
 
 
@@ -161,10 +174,6 @@ function show_good_students_request() {
 
 
 // views
-
-function remove_students_request(type, value) {
-	return request('/remove_students', {type, value});
-}
 
 function show_all_students_view(data) {
 	result_element.clear().clear_classes().add_class('show-students');
@@ -214,6 +223,12 @@ function init_students() {
 function remove_students(type, value) {
 	remove_students_request(type, value).then(() => {
 		show_all_students();
+	});
+}
+
+function search_students(type, value) {
+	search_students_request(type, value).then(data => {
+		show_all_students_view(data);
 	});
 }
 

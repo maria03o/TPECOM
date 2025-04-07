@@ -24,6 +24,8 @@ async function main() {
 	await get_remakrs();
 	
 	let body = dom.get_body();
+	console.log(body);
+	
 	body.append_children([
 		
 		components.menu_component(remarks),
