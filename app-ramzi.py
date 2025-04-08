@@ -34,34 +34,54 @@ app = Flask(__name__)
 CORS(app, resources={r"/*": {"origins": ["http://127.0.0.1:5500", "http://localhost:5500"]}})
 
 
+
+# functions
+
+def get_students():
+	return [student_to_dict(s) for s in section.get_students()]
+
+
+
+
+
+
+# views
+
 @app.route('/get_remarks', methods=['POST'])
-def get_remarks():
+def get_remarks_view():
 	return jsonify(Remark_Manager.get_remarks_str())
 
 @app.route('/get_major_student', methods=['POST'])
-def get_major_student():
+def get_major_student_view():
 	return jsonify(student_to_dict(section.get_major_student()))
 
 @app.route('/get_students', methods=['POST'])
-def get_students():
-	return jsonify([student_to_dict(s) for s in section.get_students()])
+def get_students_view():
+	print("get students")
+	return jsonify(get_students())
 
 @app.route('/init_students', methods=['POST'])
-def init_students():
+def init_students_view():
+	print("init student")
 	section.static_init()
-	return get_students()
+	return jsonify(get_students())
 
+@app.route("/test", methods=['POST'])
+def test_view():
+	print('test view')
+	return {}
 
-@app.route('/remove_student', methods=['POST'])
-def remove_student():
+@app.route('/remove_students', methods=['POST'])
+def remove_student_view():
 	data = request.json
 	type = data['type']
 	value = data['value']
+	print(type, value)
 	section.remove_students_by(type, value)
-	return get_students()
+	return jsonify(get_students())
 
 @app.route('/search_students', methods=['POST'])
-def search_students():
+def search_students_view():
 	data = request.json
 	type = data['type']
 	value = data['value']

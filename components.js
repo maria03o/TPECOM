@@ -7,7 +7,7 @@ import * as storage from './lib/Storage.js';
 export let div = dom.make_element;
 export let select = () => div('select');
 export let option = () => div('option'); 
-export let button = () => div('button');
+export let button = () => div('button').type("button");
 export let input = () => div('input');
 
 
@@ -78,8 +78,8 @@ function _compontent(functinality) {
 		let type_value = parseInt(type.get_value());
 		let value = null;
 		if (type_value != constants.all) {
-			values = component.get_child(1);
-			value = type_value == constants.remark ? parseInt(values.get_value()) : values.get_value();
+			value = component.get_child(1).get_value();
+			value = type_value == constants.remark ? parseInt(value) : value;
 		}
 		if (functinality == SEARCH) 
 			search_students(type_value, value);
@@ -89,11 +89,12 @@ function _compontent(functinality) {
 
 	type.event('change', () => {
 		let value = parseInt(type.get_value());
+		console.log(value);
 		component.clear();
 		component.append_child(type);
 		if (value == constants.first_name || value == constants.last_name || value == constants.grade)
 			component.append_child(input());
-		else if (value == constants.remark) 
+		else if (value == constants.remark)  
 			component.append_child(values);
 		component.append_child(submit_button);
 	});
@@ -154,8 +155,8 @@ function show_all_students_request() {
 	return request('/get_students');
 }
 
-function show_good_students_request() {
-	return request('/get_good_students');
+function init_students_request() {
+	return request('/init_students');
 }
 
 function remove_students_request(type, value) {
@@ -166,7 +167,9 @@ function search_students_request(type, value) {
 	return request('/search_students', {type, value});
 }
 
-
+function test_request() {
+	return request('/test');
+}
 
 
 
@@ -216,8 +219,7 @@ export function show_all_students() {
 }
 
 function init_students() {
-	request('/init_students');
-	show_all_students();
+	init_students_request().then(() => show_all_students());
 }
 
 function remove_students(type, value) {
@@ -232,9 +234,3 @@ function search_students(type, value) {
 	});
 }
 
-
-function show_good_students() {
-	show_good_students_request().then(data => {
-		show_all_students_view(data);
-	});
-}
